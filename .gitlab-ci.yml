@@ -1,0 +1,23 @@
+stages:
+  - build
+
+build-job:
+  stage: build
+  tags: 
+    - shell
+  script:
+    - log() { echo -e "\e[30;47m ${1} \e[0m ${@:2}"; } # $1 background white
+    - log CI_JOB_STAGE ${CI_JOB_STAGE}
+    - log CI_COMMIT_BRANCH ${CI_COMMIT_BRANCH}
+    - log CI_COMMIT_SHA ${CI_COMMIT_SHA}
+    # - cd vote
+    # - TAG_SHA=192.168.21.110:5000/vote:${CI_COMMIT_SHA}
+    # - log TAG_SHA ${TAG_SHA}
+    # - docker image build --tag ${TAG_SHA} .
+    # - docker push ${TAG_SHA}
+    # - echo $USER
+    # - docker pull busybox
+    # - docker tag busybox:latest 192.168.21.110:5000/busybox
+    # - docker login --username admin --password password 192.168.21.110:5000
+    # - docker push 192.168.21.110:5000/busybox
+    - echo "Compile complete."
