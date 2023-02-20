@@ -10,14 +10,13 @@ build-job:
     - log CI_JOB_STAGE ${CI_JOB_STAGE}
     - log CI_COMMIT_BRANCH ${CI_COMMIT_BRANCH}
     - log CI_COMMIT_SHA ${CI_COMMIT_SHA}
-    # - cd vote
-    # - TAG_SHA=192.168.21.110:5000/vote:${CI_COMMIT_SHA}
-    # - log TAG_SHA ${TAG_SHA}
-    # - docker image build --tag ${TAG_SHA} .
-    # - docker push ${TAG_SHA}
-    # - echo $USER
-    # - docker pull busybox
-    # - docker tag busybox:latest 192.168.21.110:5000/busybox
-    # - docker login --username admin --password password 192.168.21.110:5000
-    # - docker push 192.168.21.110:5000/busybox
-    - echo "Compile complete."
+    - log REGISTRY_URL ${REGISTRY_URL}
+    - log REPOSITORY_NAME ${REPOSITORY_NAME}
+    - log REGISTRY_LOGIN ${REGISTRY_LOGIN}
+    - log REGISTRY_PASSWORD ${REGISTRY_PASSWORD}
+    - cd vote
+    - TAG_SHA=${REGISTRY_URL}/${REPOSITORY_NAME}:${CI_COMMIT_SHA}
+    - log TAG_SHA ${TAG_SHA}
+    - docker image build --tag ${TAG_SHA} .
+    - docker login --username ${REGISTRY_LOGIN} --password ${REGISTRY_PASSWORD} ${REGISTRY_URL}
+    - docker push ${TAG_SHA}
